@@ -22,7 +22,7 @@ const getAccuracyColor = (accuracy: number) => {
 export default function LeaderboardContent() {
   const { data, loading } = usePolling<{ leaderboard: AgentReputation[]; count: number }>({
     fetcher: useCallback(() => fetch(`${API_BASE}/reputation`).then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), []),
-    interval: 15000,
+    interval: 60000,
   });
 
   const agents = data?.leaderboard ?? [];

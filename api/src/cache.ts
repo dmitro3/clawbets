@@ -15,6 +15,6 @@ export function getCached(key: string): any | null {
   return entry.data;
 }
 
-export function setCache(key: string, data: any, ttlMs = 15000): void {
+export function setCache(key: string, data: any, ttlMs = 30000): void {
   cache.set(key, { data, expiresAt: Date.now() + ttlMs });
 }

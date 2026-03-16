@@ -23,7 +23,7 @@ interface ActivityData {
   count: number;
 }
 
-export function useActivityFeed(interval = 6000) {
+export function useActivityFeed(interval = 30000) {
   const [activities, setActivities] = useState<ActivityItem[]>([]);
   const [newItems, setNewItems] = useState<ActivityItem[]>([]);
   const [loading, setLoading] = useState(true);
