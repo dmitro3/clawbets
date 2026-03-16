@@ -1,10 +1,14 @@
 import { Router, Request, Response } from "express";
 import { getProgram } from "../services/solana";
+import { getCached, setCache } from "../cache";
 
 export const activityRouter = Router();
 
 // GET /activity - Recent activity (market creations + bets)
 activityRouter.get("/", async (_req: Request, res: Response) => {
+  const cached = getCached("activity");
+  if (cached) return res.json(cached);
+
   try {
     const program = getProgram();
 
@@ -58,10 +62,9 @@ activityRouter.get("/", async (_req: Request, res: Response) => {
 
     activities.sort((a, b) => b.timestamp - a.timestamp);
 
-    res.json({
-      activities: activities.slice(0, 50),
-      count: activities.length,
-    });
+    const data = { activities: activities.slice(0, 50), count: activities.length };
+    setCache("activity", data);
+    res.json(data);
   } catch (err: any) {
     console.error("Error fetching activity:", err.message);
     // Program not deployed yet — return empty list

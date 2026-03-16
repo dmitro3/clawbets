@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { PublicKey } from "@solana/web3.js";
 import { getProgram, getReputationPda, getProgramId } from "../services/solana";
+import { getCached, setCache } from "../cache";
 
 export const reputationRouter = Router();
 
@@ -37,6 +38,9 @@ reputationRouter.get("/:pubkey", async (req: Request, res: Response) => {
 
 // GET /api/reputation - Leaderboard (top agents by accuracy)
 reputationRouter.get("/", async (_req: Request, res: Response) => {
+  const cached = getCached("leaderboard");
+  if (cached) return res.json(cached);
+
   try {
     const program = getProgram();
     const allReps = await (program.account as any).agentReputation.all();
@@ -60,10 +64,11 @@ reputationRouter.get("/", async (_req: Request, res: Response) => {
         return b.totalBets - a.totalBets;
       });
 
-    res.json({ leaderboard: formatted, count: formatted.length });
+    const data = { leaderboard: formatted, count: formatted.length };
+    setCache("leaderboard", data);
+    res.json(data);
   } catch (err: any) {
     console.error("Error fetching leaderboard:", err.message);
-    // Program not deployed yet — return empty list
     res.json({ leaderboard: [], count: 0 });
   }
 });
