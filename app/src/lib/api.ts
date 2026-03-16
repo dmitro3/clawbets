@@ -1,4 +1,4 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "/api";
+export const API_BASE = process.env.NEXT_PUBLIC_API_URL || "/api";
 
 export interface Market {
   publicKey: string;
@@ -98,4 +98,23 @@ export async function getReputation(pubkey: string): Promise<AgentReputation> {
 
 export async function getLeaderboard(): Promise<{ leaderboard: AgentReputation[]; count: number }> {
   return fetchApi("/reputation");
+}
+
+export interface ActivityItem {
+  id: string;
+  type: "bet" | "market_created";
+  timestamp: number;
+  agent: string;
+  details: {
+    marketId?: number;
+    marketPublicKey?: string;
+    marketTitle?: string;
+    amount?: number;
+    amountSol?: number;
+    position?: string;
+  };
+}
+
+export async function getActivity(): Promise<{ activities: ActivityItem[]; count: number }> {
+  return fetchApi("/activity");
 }

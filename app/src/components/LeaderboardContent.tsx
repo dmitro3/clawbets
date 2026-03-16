@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 import { motion } from "framer-motion";
-import { AgentReputation } from "@/lib/api";
+import { AgentReputation, API_BASE } from "@/lib/api";
 import { truncateAddress } from "@/lib/utils";
 import { usePolling } from "@/hooks/usePolling";
 
@@ -21,7 +21,7 @@ const getAccuracyColor = (accuracy: number) => {
 
 export default function LeaderboardContent() {
   const { data, loading } = usePolling<{ leaderboard: AgentReputation[]; count: number }>({
-    fetcher: useCallback(() => fetch("/api/reputation").then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), []),
+    fetcher: useCallback(() => fetch(`${API_BASE}/reputation`).then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), []),
     interval: 15000,
   });
 

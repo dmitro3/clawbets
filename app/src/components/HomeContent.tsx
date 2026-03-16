@@ -9,6 +9,7 @@ import { usePolling } from "@/hooks/usePolling";
 import { ChartIcon, CircleDotIcon, CoinsIcon, BotIcon } from "@/components/icons";
 import ActivityFeed from "@/components/ActivityFeed";
 import { useActivity } from "@/components/ActivityProvider";
+import { API_BASE } from "@/lib/api";
 
 const PLACEHOLDER_CA = "CLAWBet5xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
@@ -112,12 +113,12 @@ export default function HomeContent() {
   const [filter, setFilter] = useState<string>("all");
 
   const { data: marketsData, error: marketsError, loading: marketsLoading, lastUpdated, dataVersion } = usePolling<{ markets: Market[]; count: number }>({
-    fetcher: useCallback(() => fetch("/api/markets").then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), []),
+    fetcher: useCallback(() => fetch(`${API_BASE}/markets`).then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), []),
     interval: 8000,
   });
 
   const { data: protocol } = usePolling<Protocol>({
-    fetcher: useCallback(() => fetch("/api/protocol").then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), []),
+    fetcher: useCallback(() => fetch(`${API_BASE}/protocol`).then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), []),
     interval: 8000,
   });
 
