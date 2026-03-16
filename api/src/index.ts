@@ -17,6 +17,9 @@ import { activityRouter } from "./routes/activity";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Trust Cloudflare/nginx reverse proxy (fixes X-Forwarded-For rate limit error)
+app.set("trust proxy", 1);
+
 // Security middleware
 app.use(helmet());
 app.use(cors({
