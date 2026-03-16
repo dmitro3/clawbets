@@ -114,12 +114,12 @@ export default function HomeContent() {
 
   const { data: marketsData, error: marketsError, loading: marketsLoading, lastUpdated, dataVersion } = usePolling<{ markets: Market[]; count: number }>({
     fetcher: useCallback(() => fetch(`${API_BASE}/markets`).then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), []),
-    interval: 8000,
+    interval: 30000,
   });
 
   const { data: protocol } = usePolling<Protocol>({
     fetcher: useCallback(() => fetch(`${API_BASE}/protocol`).then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), []),
-    interval: 8000,
+    interval: 60000,
   });
 
   const markets = marketsData?.markets ?? [];

@@ -42,12 +42,12 @@ export default function MarketDetail({ marketId }: { marketId: number }) {
 
   const { data: market, loading: marketLoading, lastUpdated, refetch: refetchMarket, dataVersion } = usePolling<Market>({
     fetcher: useCallback(() => fetch(`${API_BASE}/markets/${marketId}`).then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), [marketId]),
-    interval: 5000,
+    interval: 30000,
   });
 
   const { data: betsData, refetch: refetchBets } = usePolling<{ bets: Bet[]; count: number }>({
     fetcher: useCallback(() => fetch(`${API_BASE}/bets/market/${marketId}`).then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), [marketId]),
-    interval: 5000,
+    interval: 30000,
   });
 
   const bets = betsData?.bets ?? [];
