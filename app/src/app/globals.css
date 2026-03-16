@@ -42,11 +42,11 @@ body::before {
 
 /* Glow effects */
 .glow-cyan { box-shadow: 0 0 20px rgba(6, 182, 212, 0.15), 0 0 60px rgba(6, 182, 212, 0.05); }
-.glow-violet { box-shadow: 0 0 20px rgba(139, 92, 246, 0.15), 0 0 60px rgba(139, 92, 246, 0.05); }
+.glow-green { box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), 0 0 60px rgba(16, 185, 129, 0.05); }
 
-/* Gradient text */
+/* Gradient text — blue-green */
 .gradient-text {
-  background: linear-gradient(135deg, #06b6d4, #8b5cf6, #ec4899);
+  background: linear-gradient(135deg, #06b6d4, #10b981);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -59,8 +59,8 @@ body::before {
 .mesh-bg {
   background:
     radial-gradient(ellipse at 20% 0%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 0%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 100%, rgba(236, 72, 153, 0.05) 0%, transparent 50%);
+    radial-gradient(ellipse at 80% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
 }
 
 /* Card hover lift */
@@ -69,6 +69,6 @@ body::before {
 }
 .card-hover:hover {
   transform: translateY(-2px);
-  border-color: rgba(139, 92, 246, 0.3);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(139, 92, 246, 0.08);
+  border-color: rgba(6, 182, 212, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(16, 185, 129, 0.08);
 }
