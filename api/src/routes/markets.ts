@@ -33,6 +33,11 @@ marketsRouter.get("/", async (req: Request, res: Response) => {
     const program = getProgram();
     const markets = await (program.account as any).market.all();
 
+    if (!markets || markets.length === 0) {
+      res.json({ markets: [], count: 0 });
+      return;
+    }
+
     const formatted = markets.map((m) => ({
       publicKey: m.publicKey.toBase58(),
       marketId: m.account.marketId.toNumber(),
@@ -69,7 +74,8 @@ marketsRouter.get("/", async (req: Request, res: Response) => {
     res.json({ markets: formatted, count: formatted.length });
   } catch (err: any) {
     console.error("Error listing markets:", err.message);
-    res.status(500).json({ error: "Failed to list markets" });
+    // Program not deployed yet — return empty list
+    res.json({ markets: [], count: 0 });
   }
 });
 
