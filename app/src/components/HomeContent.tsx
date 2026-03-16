@@ -10,6 +10,87 @@ import { ChartIcon, CircleDotIcon, CoinsIcon, BotIcon } from "@/components/icons
 import ActivityFeed from "@/components/ActivityFeed";
 import { useActivity } from "@/components/ActivityProvider";
 
+const PLACEHOLDER_CA = "CLAWBet5xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+
+function TokenBanner() {
+  const [copied, setCopied] = useState(false);
+
+  const copy = () => {
+    navigator.clipboard.writeText(PLACEHOLDER_CA);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.1 }}
+      className="mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-3 px-4 py-3 rounded-xl bg-[#06b6d4]/5 border border-[#06b6d4]/20"
+    >
+      {/* Left: token info */}
+      <div className="flex items-center gap-2.5 flex-1 min-w-0">
+        {/* pump.fun badge */}
+        <span className="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#10b981]/10 border border-[#10b981]/25 text-[10px] font-semibold text-[#10b981] tracking-wide uppercase">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse" />
+          Live on pump.fun
+        </span>
+
+        {/* Token name + blue check */}
+        <div className="flex items-center gap-1.5">
+          <span className="text-sm font-bold text-white">$CLAW</span>
+          {/* Blue verified check */}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="shrink-0">
+            <circle cx="12" cy="12" r="12" fill="#1d9bf0" />
+            <path d="M9.5 16.5L5.5 12.5L6.91 11.08L9.5 13.67L17.09 6.08L18.5 7.5L9.5 16.5Z" fill="white" />
+          </svg>
+        </div>
+
+        {/* Contract address */}
+        <div className="flex items-center gap-1.5 min-w-0">
+          <span className="text-zinc-500 text-xs hidden sm:inline">CA:</span>
+          <code className="text-xs text-zinc-400 font-mono truncate max-w-[120px] sm:max-w-[200px]">
+            {PLACEHOLDER_CA}
+          </code>
+        </div>
+      </div>
+
+      {/* Right: actions */}
+      <div className="flex items-center gap-2 shrink-0">
+        <button
+          onClick={copy}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white transition-all border border-white/10"
+        >
+          {copied ? (
+            <>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Copied
+            </>
+          ) : (
+            <>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              Copy CA
+            </>
+          )}
+        </button>
+        <a
+          href="https://pump.fun"
+          target="_blank"
+          rel="noopener"
+          className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-[#06b6d4] to-[#10b981] text-[#050507] hover:opacity-90 transition-opacity"
+        >
+          Buy on pump.fun ↗
+        </a>
+      </div>
+    </motion.div>
+  );
+}
+
 function LastUpdated({ timestamp }: { timestamp: number | null }) {
   const [, setTick] = useState(0);
   // Re-render every 5s to update relative time
@@ -56,7 +137,7 @@ export default function HomeContent() {
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="text-center py-24 text-zinc-600">
             <div className="inline-flex items-center gap-3">
-              <div className="w-5 h-5 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-[#06b6d4]/30 border-t-[#06b6d4] rounded-full animate-spin" />
               Loading markets...
             </div>
           </div>
@@ -75,11 +156,12 @@ export default function HomeContent() {
           transition={{ duration: 0.5 }}
           className="mb-14"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/15 text-[11px] text-violet-400 font-medium tracking-wide mb-5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#06b6d4]/10 border border-[#06b6d4]/15 text-[11px] text-[#06b6d4] font-medium tracking-wide mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse" />
             LIVE ON SOLANA DEVNET
             <LastUpdated timestamp={lastUpdated} />
           </div>
+          <TokenBanner />
           <h2 className="text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-4">
             Prediction Markets
             <br />
@@ -118,7 +200,7 @@ export default function HomeContent() {
                   onClick={() => setFilter(f)}
                   className={`px-4 py-2 rounded-xl text-xs font-medium transition-all ${
                     filter === f
-                      ? "bg-violet-500/15 text-violet-300 border border-violet-500/25"
+                      ? "bg-[#06b6d4]/10 text-[#06b6d4] border border-[#06b6d4]/25"
                       : "bg-transparent text-zinc-500 border border-transparent hover:text-zinc-300 hover:bg-white/[0.03]"
                   }`}
                 >
