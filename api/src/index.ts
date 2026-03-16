@@ -12,6 +12,7 @@ import { marketsRouter } from "./routes/markets";
 import { betsRouter } from "./routes/bets";
 import { reputationRouter } from "./routes/reputation";
 import { protocolRouter } from "./routes/protocol";
+import { activityRouter } from "./routes/activity";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -40,10 +41,11 @@ app.get("/health", (_req, res) => {
 });
 
 // Routes
-app.use("/api/protocol", protocolRouter);
-app.use("/api/markets", marketsRouter);
-app.use("/api/bets", betsRouter);
-app.use("/api/reputation", reputationRouter);
+app.use("/protocol", protocolRouter);
+app.use("/markets", marketsRouter);
+app.use("/bets", betsRouter);
+app.use("/reputation", reputationRouter);
+app.use("/activity", activityRouter);
 
 // Error handler
 app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
