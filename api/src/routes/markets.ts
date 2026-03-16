@@ -48,7 +48,7 @@ marketsRouter.get("/", async (req: Request, res: Response) => {
       creator: m.account.creator.toBase58(),
       title: m.account.title,
       description: m.account.description,
-      oracleFeed: m.account.oracleFeed.toBase58(),
+      feedId: Buffer.from(m.account.feedId).toString("hex"),
       targetPrice: m.account.targetPrice.toNumber(),
       targetAbove: m.account.targetAbove,
       deadline: m.account.deadline.toNumber(),
@@ -63,12 +63,8 @@ marketsRouter.get("/", async (req: Request, res: Response) => {
       noCount: m.account.noCount,
       status: Object.keys(m.account.status)[0],
       outcome: m.account.outcome,
-      resolvedPrice: m.account.resolvedPrice
-        ? m.account.resolvedPrice.toNumber()
-        : null,
-      resolvedAt: m.account.resolvedAt
-        ? m.account.resolvedAt.toNumber()
-        : null,
+      resolvedPrice: m.account.resolvedPrice ? m.account.resolvedPrice.toNumber() : null,
+      resolvedAt: m.account.resolvedAt ? m.account.resolvedAt.toNumber() : null,
       createdAt: m.account.createdAt.toNumber(),
     }));
 
@@ -109,7 +105,7 @@ marketsRouter.get("/:id", async (req: Request, res: Response) => {
       creator: market.creator.toBase58(),
       title: market.title,
       description: market.description,
-      oracleFeed: market.oracleFeed.toBase58(),
+      feedId: Buffer.from(market.feedId).toString("hex"),
       targetPrice: market.targetPrice.toNumber(),
       targetAbove: market.targetAbove,
       deadline: market.deadline.toNumber(),
