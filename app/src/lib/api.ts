@@ -6,7 +6,7 @@ export interface Market {
   creator: string;
   title: string;
   description: string;
-  feedId: string;
+  feedId: string;  // hex string of [u8;32] Pyth feed ID
   targetPrice: number;
   targetAbove: boolean;
   deadline: number;
