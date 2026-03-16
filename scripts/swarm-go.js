@@ -2,7 +2,11 @@ const anchor = require("@coral-xyz/anchor");
 const { Keypair, PublicKey, SystemProgram, LAMPORTS_PER_SOL } = require("@solana/web3.js");
 const fs = require("fs");
 
-const idl = JSON.parse(fs.readFileSync("./target/idl/clawbets.json", "utf8"));
+const path = require("path");
+const idlPath = fs.existsSync("./target/idl/clawbets.json") ? "./target/idl/clawbets.json" : "./app/src/lib/clawbets-idl.json";
+const idl = JSON.parse(fs.readFileSync(idlPath, "utf8"));
+const RPC_URL = process.env.SOLANA_RPC_URL || "https://api.devnet.solana.com";
+const KEYPAIR_PATH = process.env.KEYPAIR_PATH || (process.env.HOME + "/.config/solana/id.json");
 const PYTH_SOL_USD = new PublicKey("J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix");
 
 const AGENT_NAMES = [
@@ -22,7 +26,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
 async function main() {
-  const connection = new anchor.web3.Connection("https://api.devnet.solana.com", "confirmed");
+  const connection = new anchor.web3.Connection(RPC_URL, "confirmed");
 
   // Load agents
   const agents = [];
@@ -32,7 +36,7 @@ async function main() {
   }
 
   // Admin for reading protocol
-  const adminKp = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(fs.readFileSync("/root/.config/solana/id.json", "utf8"))));
+  const adminKp = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(fs.readFileSync(KEYPAIR_PATH, "utf8"))));
   const adminWallet = new anchor.Wallet(adminKp);
   const adminProvider = new anchor.AnchorProvider(connection, adminWallet, { commitment: "confirmed" });
   const adminProgram = new anchor.Program(idl, adminProvider);

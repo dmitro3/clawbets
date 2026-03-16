@@ -1,8 +1,15 @@
 const anchor = require("@coral-xyz/anchor");
 const { Keypair, PublicKey, SystemProgram, LAMPORTS_PER_SOL } = require("@solana/web3.js");
 const fs = require("fs");
+const path = require("path");
 
-const idl = JSON.parse(fs.readFileSync("./target/idl/clawbets.json", "utf8"));
+const idlPath = fs.existsSync("./target/idl/clawbets.json")
+  ? "./target/idl/clawbets.json"
+  : "./app/src/lib/clawbets-idl.json";
+const idl = JSON.parse(fs.readFileSync(idlPath, "utf8"));
+
+const RPC_URL = process.env.SOLANA_RPC_URL || "https://api.devnet.solana.com";
+const KEYPAIR_PATH = process.env.KEYPAIR_PATH || `${process.env.HOME}/.config/solana/id.json`;
 
 const AGENT_NAMES = [
   "AlphaBot", "BetaTrader", "GammaOracle", "DeltaHedge", "EpsilonAI",
@@ -12,8 +19,8 @@ const AGENT_NAMES = [
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 async function main() {
-  const connection = new anchor.web3.Connection("https://api.devnet.solana.com", "confirmed");
-  const adminKp = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(fs.readFileSync("/root/.config/solana/id.json", "utf8"))));
+  const connection = new anchor.web3.Connection(RPC_URL, "confirmed");
+  const adminKp = Keypair.fromSecretKey(Uint8Array.from(JSON.parse(fs.readFileSync(KEYPAIR_PATH, "utf8"))));
 
   console.log("=== GENERATING 10 AGENT WALLETS ===\n");
   const agentsDir = "./agents";
