@@ -1,5 +1,5 @@
 {
-  "address": "3kBwjzUXtVeUshBWDD1Ls5PZPqQZgQUGNUTdP6jCqobb",
+  "address": "8bob8yfaWXatYCtz6drEYD6og6mfVZ47ZdnxfvRmVgCH",
   "metadata": {
     "name": "clawbets",
     "version": "0.1.0",
@@ -781,7 +781,7 @@
         {
           "name": "price_update",
           "docs": [
-            "Pyth PriceUpdateV2 account — posted on-chain via Hermes + Pyth receiver.",
+            "Pyth PriceUpdateV2 account \u2014 posted on-chain via Hermes + Pyth receiver.",
             "Anchor automatically validates this is owned by the Pyth receiver program."
           ]
         }

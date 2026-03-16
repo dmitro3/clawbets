@@ -9,7 +9,7 @@ skip-lint = false
 clawbets = "3kBwjzUXtVeUshBWDD1Ls5PZPqQZgQUGNUTdP6jCqobb"
 
 [programs.devnet]
-clawbets = "3kBwjzUXtVeUshBWDD1Ls5PZPqQZgQUGNUTdP6jCqobb"
+clawbets = "8bob8yfaWXatYCtz6drEYD6og6mfVZ47ZdnxfvRmVgCH"
 
 [registry]
 url = "https://api.apr.dev"
@@ -20,3 +20,4 @@ wallet = "~/.config/solana/id.json"
 
 [scripts]
 test = "npx ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+initialize = "npx ts-node scripts/init-devnet.ts"

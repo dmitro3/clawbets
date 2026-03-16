@@ -7,7 +7,7 @@ import { Program, AnchorProvider, BN } from "@coral-xyz/anchor";
 import { Market } from "@/lib/api";
 import idl from "@/lib/clawbets-idl.json";
 
-const PROGRAM_ID = new PublicKey("3kBwjzUXtVeUshBWDD1Ls5PZPqQZgQUGNUTdP6jCqobb");
+const PROGRAM_ID = new PublicKey("8bob8yfaWXatYCtz6drEYD6og6mfVZ47ZdnxfvRmVgCH");
 
 export default function PlaceBet({ market, onBetPlaced }: { market: Market; onBetPlaced?: (bettor: string, position: boolean, amount: number) => void }) {
   const { publicKey, signTransaction, signAllTransactions } = useWallet();

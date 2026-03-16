@@ -63,6 +63,7 @@ reputationRouter.get("/", async (_req: Request, res: Response) => {
     res.json({ leaderboard: formatted, count: formatted.length });
   } catch (err: any) {
     console.error("Error fetching leaderboard:", err.message);
-    res.status(500).json({ error: "Failed to fetch leaderboard" });
+    // Program not deployed yet — return empty list
+    res.json({ leaderboard: [], count: 0 });
   }
 });

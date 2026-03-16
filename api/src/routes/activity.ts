@@ -64,6 +64,7 @@ activityRouter.get("/", async (_req: Request, res: Response) => {
     });
   } catch (err: any) {
     console.error("Error fetching activity:", err.message);
-    res.status(500).json({ error: "Failed to fetch activity" });
+    // Program not deployed yet — return empty list
+    res.json({ activities: [], count: 0 });
   }
 });

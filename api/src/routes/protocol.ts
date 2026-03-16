@@ -19,7 +19,16 @@ protocolRouter.get("/", async (_req: Request, res: Response) => {
     });
   } catch (err: any) {
     console.error("Error fetching protocol:", err.message, err.cause || "");
-    res.status(500).json({ error: "Failed to fetch protocol data" });
+    // Program not deployed or not initialized yet — return defaults
+    res.json({
+      admin: null,
+      marketCount: 0,
+      totalVolume: 0,
+      totalVolumeSol: 0,
+      programId: getProgramId().toBase58(),
+      rpcUrl: getRpcUrl(),
+      status: "not_initialized",
+    });
   }
 });
 

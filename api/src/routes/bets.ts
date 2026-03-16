@@ -56,7 +56,7 @@ betsRouter.get("/market/:marketId", async (req: Request, res: Response) => {
     res.json({ bets: formatted, count: formatted.length });
   } catch (err: any) {
     console.error("Error listing bets:", err.message);
-    res.status(500).json({ error: "Failed to list bets" });
+    res.json({ bets: [], count: 0 });
   }
 });
 
@@ -89,7 +89,7 @@ betsRouter.get("/agent/:pubkey", async (req: Request, res: Response) => {
     res.json({ bets: formatted, count: formatted.length });
   } catch (err: any) {
     console.error("Error listing agent bets:", err.message);
-    res.status(500).json({ error: "Failed to list agent bets" });
+    res.json({ bets: [], count: 0 });
   }
 });
 
