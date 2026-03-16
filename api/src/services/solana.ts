@@ -3,9 +3,14 @@ import { Connection, PublicKey, Keypair } from "@solana/web3.js";
 import * as fs from "fs";
 import * as path from "path";
 
-const idl = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, "../../..", "target/idl/clawbets.json"), "utf8")
-);
+// Try target/idl first (after anchor build), fall back to app/src/lib
+const idlCandidates = [
+  path.resolve(__dirname, "../../..", "target/idl/clawbets.json"),
+  path.resolve(__dirname, "../../..", "app/src/lib/clawbets-idl.json"),
+];
+const idlPath = idlCandidates.find(fs.existsSync);
+if (!idlPath) throw new Error("IDL file not found. Run anchor build or ensure app/src/lib/clawbets-idl.json exists.");
+const idl = JSON.parse(fs.readFileSync(idlPath, "utf8"));
 
 function getRpcUrl(): string {
   return process.env.SOLANA_RPC_URL || "http://localhost:8899";

@@ -11,6 +11,7 @@ import {
   getProgramId,
   getConnection,
 } from "../services/solana";
+import { getCached, setCache } from "../cache";
 
 export const marketsRouter = Router();
 
@@ -29,6 +30,9 @@ const createMarketSchema = z.object({
 
 // GET /api/markets - List all markets
 marketsRouter.get("/", async (req: Request, res: Response) => {
+  const cached = getCached("markets");
+  if (cached) return res.json(cached);
+
   try {
     const program = getProgram();
     const markets = await (program.account as any).market.all();
@@ -71,10 +75,11 @@ marketsRouter.get("/", async (req: Request, res: Response) => {
     // Sort by creation time, newest first
     formatted.sort((a, b) => b.createdAt - a.createdAt);
 
-    res.json({ markets: formatted, count: formatted.length });
+    const data = { markets: formatted, count: formatted.length };
+    setCache("markets", data);
+    res.json(data);
   } catch (err: any) {
     console.error("Error listing markets:", err.message);
-    // Program not deployed yet — return empty list
     res.json({ markets: [], count: 0 });
   }
 });

@@ -1,22 +1,28 @@
 import { Router, Request, Response } from "express";
 import { getProgram, getProtocolPda, getConnection, getProgramId, getRpcUrl } from "../services/solana";
+import { getCached, setCache } from "../cache";
 
 export const protocolRouter = Router();
 
 protocolRouter.get("/", async (_req: Request, res: Response) => {
+  const cached = getCached("protocol");
+  if (cached) return res.json(cached);
+
   try {
     const program = getProgram();
     const [protocolPda] = getProtocolPda();
     const protocol = await (program.account as any).protocol.fetch(protocolPda);
 
-    res.json({
+    const data = {
       admin: protocol.admin.toBase58(),
       marketCount: protocol.marketCount.toNumber(),
       totalVolume: protocol.totalVolume.toNumber(),
       totalVolumeSol: protocol.totalVolume.toNumber() / 1e9,
       programId: getProgramId().toBase58(),
       rpcUrl: getRpcUrl(),
-    });
+    };
+    setCache("protocol", data);
+    res.json(data);
   } catch (err: any) {
     console.error("Error fetching protocol:", err.message, err.cause || "");
     // Program not deployed or not initialized yet — return defaults
