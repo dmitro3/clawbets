@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Market, Bet } from "@/lib/api";
+import { Market, Bet, API_BASE } from "@/lib/api";
 import {
   truncateAddress,
   formatTimestamp,
@@ -41,12 +41,12 @@ export default function MarketDetail({ marketId }: { marketId: number }) {
   const [optimisticBets, setOptimisticBets] = useState<OptimisticBet[]>([]);
 
   const { data: market, loading: marketLoading, lastUpdated, refetch: refetchMarket, dataVersion } = usePolling<Market>({
-    fetcher: useCallback(() => fetch(`/api/markets/${marketId}`).then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), [marketId]),
+    fetcher: useCallback(() => fetch(`${API_BASE}/markets/${marketId}`).then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), [marketId]),
     interval: 5000,
   });
 
   const { data: betsData, refetch: refetchBets } = usePolling<{ bets: Bet[]; count: number }>({
-    fetcher: useCallback(() => fetch(`/api/bets/market/${marketId}`).then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), [marketId]),
+    fetcher: useCallback(() => fetch(`${API_BASE}/bets/market/${marketId}`).then((r) => { if (!r.ok) throw new Error(`${r.status}`); return r.json(); }), [marketId]),
     interval: 5000,
   });
 

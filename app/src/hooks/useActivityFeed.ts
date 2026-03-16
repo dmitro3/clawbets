@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { API_BASE } from "@/lib/api";
 
 export interface ActivityItem {
   id: string;
@@ -31,7 +32,7 @@ export function useActivityFeed(interval = 6000) {
 
   const fetchActivity = useCallback(async () => {
     try {
-      const res = await fetch("/api/activity");
+      const res = await fetch(`${API_BASE}/activity`);
       if (!res.ok) return;
       const data: ActivityData = await res.json();
       const items = data.activities;
