@@ -2,7 +2,11 @@ import * as anchor from "@coral-xyz/anchor";
 import { PublicKey, SystemProgram } from "@solana/web3.js";
 import * as fs from "fs";
 
-const idl = JSON.parse(fs.readFileSync("./target/idl/clawbets.json", "utf8"));
+// Try target/idl first, fall back to app/src/lib
+const idlPath = fs.existsSync("./target/idl/clawbets.json")
+  ? "./target/idl/clawbets.json"
+  : "./app/src/lib/clawbets-idl.json";
+const idl = JSON.parse(fs.readFileSync(idlPath, "utf8"));
 
 async function main() {
   const connection = new anchor.web3.Connection(

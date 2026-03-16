@@ -14,7 +14,7 @@ pub use instructions::reclaim_bet::*;
 pub use instructions::expire_market::*;
 pub use instructions::close_betting::*;
 
-declare_id!("3kBwjzUXtVeUshBWDD1Ls5PZPqQZgQUGNUTdP6jCqobb");
+declare_id!("8bob8yfaWXatYCtz6drEYD6og6mfVZ47ZdnxfvRmVgCH");
 
 #[program]
 pub mod clawbets {
