@@ -49,11 +49,8 @@ export default function NavMenu() {
     <nav className="sticky top-0 z-50 border-b border-[#1a1a2e]/60 bg-[#050507]/80 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3.5">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-3 group">
+        <a href="/" className="flex items-center group">
           <Logo size={36} />
-          <span className="text-xl font-bold tracking-tight text-white">
-            Claw<span className="gradient-text">Bets</span>
-          </span>
         </a>
 
         {/* Desktop Nav */}
